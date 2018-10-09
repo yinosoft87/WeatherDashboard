@@ -52,7 +52,8 @@ namespace wDashboard.Models
       }
       catch
       {
-        throw new ArgumentException("No get data from weather service.");
+        return "";
+        //throw new ArgumentException("No get data from weather service.");
       }
     }
 
@@ -65,8 +66,8 @@ namespace wDashboard.Models
       foreach (var iValue in oValue.Children())
       {
         JObject iJson = JObject.Parse(iValue.ToString());
-        oListTemps.Date[count] = Convert.ToDateTime(iJson.GetValue("datetime")).ToString("dd/MM/yyyy");
-        oListTemps.Temperature[count] = Convert.ToInt32(iJson.GetValue("temp"));
+        oListTemps.date[count] = Convert.ToDateTime(iJson.GetValue("datetime")).ToString("dd/MM/yyyy");
+        oListTemps.temperature[count] = Convert.ToInt32(iJson.GetValue("temp"));
         count++;
       }
       return oListTemps;
@@ -80,12 +81,12 @@ namespace wDashboard.Models
     }
     public DayTemperature(int large)
     {
-      Date = new string[large];
-      Temperature = new double[large];
+      date = new string[large];
+      temperature = new double[large];
     }
 
-    public string[] Date { get; set; }
-    public double[] Temperature { get; set; }
+    public string[] date { get; set; }
+    public double[] temperature { get; set; }
   }
 
   public class PositionCity

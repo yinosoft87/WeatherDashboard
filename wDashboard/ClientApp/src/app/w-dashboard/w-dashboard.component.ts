@@ -15,30 +15,21 @@ import { Decimal } from "decimal.js"
 
 export class WDashboardComponent implements OnInit {
   @ViewChild('donut') donut: ElementRef;
-  chart = Chart;
+  public chart = Chart;
   public DayTemperatures: IDayTemperature;
   public cityName: string;
 
   canvas: any;
   ctx: any;
 
-  dayText: string[];
-  tempNums: number[];
-
-
   constructor(private DashBoardService: WDashboardService, private router: Router,
     private activateRoute: ActivatedRoute) {
 
     this.DashBoardService.GetListTemperatures("CdObregon")
       .subscribe(temps => {
-
-        this.dayText = ['sep 1', 'sep 2', 'sep 3', 'sep 4', 'sep 5', 'sep 6', 'sep 7', 'sep 8', 'sep 8', 'sep 10', 'sep 11', 'sep 12', 'sep 13', 'sep 14', 'sep 15'];
-        this.tempNums = [25.5, 25, 26, 27, 26.1, 25.6, 24, 26.0, 28, 29, 29, 28, 30, 28, 28];
-
-        this.LoadChartGraph("Temperatures", this.dayText, this.tempNums);
-        this.chart.render();
-
+        this.cityName = "CdObregon";
         this.DayTemperatures = temps;
+        this.LoadChartGraph('Temperatures', temps.date, temps.temperature);
         error => console.error(error)
       });
   }
@@ -52,29 +43,24 @@ export class WDashboardComponent implements OnInit {
 
       this.DashBoardService.GetListTemperatures(param["name"])
         .subscribe(temps => {
-          this.chart.data.datasets = temps.temperatures;
-          this.chart.data.labels = temps.dates;
-          this.chart.update();
-          this.chart.render();
-
           this.DayTemperatures = temps;
+          this.LoadChartGraph('Temperatures', temps.date, temps.temperature);
           error => console.error(error)
         });
-
       this.cityName = param["name"];
     });
   }
 
-  public LoadChartGraph(Title: string, dates: string[], temperatures: number[]) {
+  public LoadChartGraph(Title: string, labe: string[], num: number[]) {
     this.canvas = document.getElementById('myChart');
     this.ctx = this.canvas.getContext('2d');
     this.chart = new Chart(this.ctx, {
       type: 'line',
       data: {
-        labels: dates,
+        labels: labe,
         datasets: [{
           label: Title,
-          data: temperatures,
+          data: num,
           backgroundColor: [
             'rgba(59, 122, 184, 1)',
             'rgba(54, 162, 235, 1)',

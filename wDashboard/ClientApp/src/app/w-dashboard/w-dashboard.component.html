@@ -9,25 +9,26 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
   <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
   <script src="node_modules/chart.js/src/chart.js"></script>
-
+  
   <div class="row col-lg-11 col-sm-11 col-xs-11" style="background-color:aliceblue;align-content:center; text-align:center">
     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 ">
-      <canvas id="myChart" class="col-sm-12"></canvas>
+      <canvas id="myChart" class="col-sm-12 col-md-12 col-xs-12 col-lg-12"></canvas>
     </div>
     <div class="row col-xs-12 col-sm-4 col-md-4 col-lg-4 ">
       <div>
-        <sm-dropdown  title="select city" class="pointing floating labeled icon btn">
-          <sm-item routerLink='/city/CdObregon' routerLinkActive="active">Cd Obregon</sm-item>
-          <sm-item routerLink='/city/Navojoa' >Navojoa</sm-item>
+        <sm-dropdown id="dropdown" title="select city" class="pointing floating labeled icon btn">
+          <sm-item routerLink='/city/CdObregon/' routerLinkActive="active">Cd Obregon</sm-item>
+          <sm-item routerLink='/city/Navojoa'>Navojoa</sm-item>
           <sm-item routerLink='/city/Hermosillo'>Hermosillo</sm-item>
           <sm-item routerLink='/city/Nogales'>Nogales</sm-item>
         </sm-dropdown>
       </div>
       <div>
-        <sm-dropdown title="select unit" class="pointing floating labeled icon btn">
-          <sm-item >°C</sm-item>
-          <sm-item >°F</sm-item>
-        </sm-dropdown>
+        <select id="gradeSelect" title="select unit" class="pointing floating labeled icon btn" onchange="message(this)">
+          <option selected="selected" value="M">°C</option>
+          <option value="S">°K</option>
+          <option value="I">°F</option>
+        </select>
       </div>
     </div>
   </div>
@@ -60,8 +61,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let temperature of DayTemperatures.temperature">
-            <td> {{ temperature }} </td>
+          <tr *ngFor="let temperatures of DayTemperatures.temperature">
+            <td> {{ temperatures }} </td>
           </tr>
         </tbody>
       </table>
