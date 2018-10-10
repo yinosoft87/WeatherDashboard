@@ -27,7 +27,7 @@ import { WDashboardService } from './w-dashboard/w-dashboard.service';
     NgSemanticModule,
     RouterModule.forRoot([
       { path: '', component: WDashboardComponent, pathMatch: 'full' },
-      { path: 'city/:name', component: WDashboardComponent },
+      { path: 'city/:name/:utemp', component: WDashboardComponent },
     ])
   ],
   providers: [WDashboardService],

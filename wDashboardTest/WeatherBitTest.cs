@@ -15,7 +15,7 @@ namespace wDashboardTest
     {
       WebWeatherBit oWeather = new WebWeatherBit();
       DayTemperature answer = oWeather.GetHistoryTemps("Navojoa", "M");
-      Assert.IsTrue(answer.Date.Count > 0);
+      Assert.IsTrue(answer.date.Length > 0);
     }
 
     [TestMethod]
@@ -31,12 +31,31 @@ namespace wDashboardTest
     }
 
     [TestMethod]
+    public void Test_WebWeatherBit_GetJsonAnswer_unitTemperature()
+    {
+      WebWeatherBit oWeather = new WebWeatherBit();
+      PositionCity oPosition = oWeather.GetPositionCity("Navojoa");
+
+      string answer = oWeather.GetTempDaysFromWeather(1, "I", oPosition);
+
+      JObject oJson = JObject.Parse(answer);
+      JToken oValue = oJson.GetValue("data");
+      string respuesta = "";
+      foreach(var iValue in oValue.Children())
+      {
+        JObject iJson = JObject.Parse(iValue.ToString());
+        respuesta = iJson.GetValue("temp").ToString();
+      }
+      Assert.AreNotEqual("0", respuesta);
+    }
+
+    [TestMethod]
     public void Test_WebWeatherBit_ConvertStringToJsonObject_WrongNoCity()
     {
       WebWeatherBit oWeather = new WebWeatherBit();
       DayTemperature answer = oWeather.GetHistoryTemps("guaymas", "M");
 
-      Assert.AreEqual(0,answer.Date.Count);
+      Assert.AreNotEqual(0,answer.date.Length);
 ;    }
   }
 }

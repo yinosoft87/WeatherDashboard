@@ -41,9 +41,8 @@ namespace wDashboard.Models
     {
       try
       {
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.weatherbit.io/v2.0/forecast/daily?lat="+
-          posCity.lat + "&lon="+ posCity.lon + "&days="+ days + "&units=" +
-          unit + "&key=a6514ef14da74157b9a1822a45ea30e3");
+        string queryRequest = "https://api.weatherbit.io/v2.0/forecast/daily?lat=" + posCity.lat + "&lon=" + posCity.lon + "&days=" + days + "&units=" + unit + "&key=a6514ef14da74157b9a1822a45ea30e3";
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(queryRequest);
         request.Method = "GET";
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
         Stream dataStream = response.GetResponseStream();

@@ -15,10 +15,10 @@ namespace wDashboard.Controllers
   public class WeatherBitController : Controller
   {
     [HttpGet("[action]")]
-    public DayTemperature GetListTemperatures(string cityName)
+    public DayTemperature GetListTemperatures(string cityName, string unitTemp)
     {
       WebWeatherBit oWeatherBit = new WebWeatherBit();
-      return oWeatherBit.GetHistoryTemps(cityName, "M");
+      return oWeatherBit.GetHistoryTemps(cityName, unitTemp);
     }
 
   }

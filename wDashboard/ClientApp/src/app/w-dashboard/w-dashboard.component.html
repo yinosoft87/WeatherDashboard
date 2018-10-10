@@ -4,31 +4,28 @@
   </div>
   <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
   <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-  <script type="text/javascript" src="node_modules/chart.js/Chart.min.js"></script>
-  <script type="text/javascript" src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
   <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-  <script src="node_modules/chart.js/src/chart.js"></script>
-  
+
   <div class="row col-lg-11 col-sm-11 col-xs-11" style="background-color:aliceblue;align-content:center; text-align:center">
     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 ">
       <canvas id="myChart" class="col-sm-12 col-md-12 col-xs-12 col-lg-12"></canvas>
     </div>
     <div class="row col-xs-12 col-sm-4 col-md-4 col-lg-4 ">
       <div>
-        <sm-dropdown id="dropdown" title="select city" class="pointing floating labeled icon btn">
-          <sm-item routerLink='/city/CdObregon/' routerLinkActive="active">Cd Obregon</sm-item>
-          <sm-item routerLink='/city/Navojoa'>Navojoa</sm-item>
-          <sm-item routerLink='/city/Hermosillo'>Hermosillo</sm-item>
-          <sm-item routerLink='/city/Nogales'>Nogales</sm-item>
+        <sm-dropdown id="dropdown" title="Select city" class="pointing floating labeled icon btn">
+          <sm-item (click)='ChangeByCity("CdObregon")'>Cd Obregon</sm-item>
+          <sm-item (click)='ChangeByCity("Navojoa")'>Navojoa</sm-item>
+          <sm-item (click)='ChangeByCity("Hermosillo")'>Hermosillo</sm-item>
+          <sm-item (click)='ChangeByCity("Nogales")'>Nogales</sm-item>
         </sm-dropdown>
       </div>
       <div>
-        <select id="gradeSelect" title="select unit" class="pointing floating labeled icon btn" onchange="message(this)">
-          <option selected="selected" value="M">°C</option>
-          <option value="S">°K</option>
-          <option value="I">°F</option>
-        </select>
+        <sm-dropdown id="gradeSelect" title="Select unit" class="pointing floating labeled icon btn">
+          <sm-item (click)='ChangeByUnitTemperature("M")'>Celcius °C</sm-item>
+          <sm-item (click)='ChangeByUnitTemperature("K")'>Kelvin °K</sm-item>
+          <sm-item (click)='ChangeByUnitTemperature("I")'>Farenheit °F</sm-item>
+        </sm-dropdown>
       </div>
     </div>
   </div>
@@ -66,7 +63,7 @@
           </tr>
         </tbody>
       </table>
-      </div>
     </div>
+  </div>
 </div>
 

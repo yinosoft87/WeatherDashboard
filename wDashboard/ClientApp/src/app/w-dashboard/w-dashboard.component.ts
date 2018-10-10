@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Location } from '@angular/common';
 import * as Chart from 'chart.js'
 import { IDayTemperature } from './IDayTemperature';
 import { WDashboardService } from './w-dashboard.service';
@@ -15,19 +16,23 @@ import { Decimal } from "decimal.js"
 
 export class WDashboardComponent implements OnInit {
   @ViewChild('donut') donut: ElementRef;
-  public chart = Chart;
-  public DayTemperatures: IDayTemperature;
-  public cityName: string;
+  chart = Chart;
+  DayTemperatures: IDayTemperature;
+  cityName: string;
+  unitTemp: string;
 
   canvas: any;
   ctx: any;
 
   constructor(private DashBoardService: WDashboardService, private router: Router,
-    private activateRoute: ActivatedRoute) {
+    private activateRoute: ActivatedRoute, private location: Location) {
+    this.cityName = 'CdObregon';
+    this.unitTemp = 'M';
 
-    this.DashBoardService.GetListTemperatures("CdObregon")
+    this.location.replaceState('/city/' + this.cityName + '/' + this.unitTemp);
+    this.DashBoardService.GetListTemperatures(this.cityName, this.unitTemp)
       .subscribe(temps => {
-        this.cityName = "CdObregon";
+        this.cityName = 'CdObregon';
         this.DayTemperatures = temps;
         this.LoadChartGraph('Temperatures', temps.date, temps.temperature);
         error => console.error(error)
@@ -35,20 +40,40 @@ export class WDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.activateRoute.params.subscribe(param => {
-      if (param["name"] == undefined) {
+      if (param["name"] == undefined || param["utemp"] == undefined) {
         return;
       }
-
-      this.DashBoardService.GetListTemperatures(param["name"])
+      this.DashBoardService.GetListTemperatures(param["name"], param["utemp"])
         .subscribe(temps => {
+          this.cityName = param["name"];
           this.DayTemperatures = temps;
           this.LoadChartGraph('Temperatures', temps.date, temps.temperature);
           error => console.error(error)
         });
-      this.cityName = param["name"];
     });
+  }
+
+  public ChangeByCity(city: string) {
+    this.cityName = city;
+    this.location.replaceState('/city/' + city + '/' + this.unitTemp);
+    this.DashBoardService.GetListTemperatures(city, this.unitTemp)
+      .subscribe(temps => {
+        this.DayTemperatures = temps;
+        this.LoadChartGraph('Temperatures', temps.date, temps.temperature);
+        error => console.error(error)
+      });
+  }
+
+  public ChangeByUnitTemperature(uTemp: string) {
+    this.unitTemp = uTemp;
+    this.location.replaceState('/city/' + this.cityName + '/' + this.unitTemp);
+    this.DashBoardService.GetListTemperatures(this.cityName, uTemp)
+      .subscribe(temps => {
+        this.DayTemperatures = temps;
+        this.LoadChartGraph('Temperatures', temps.date, temps.temperature);
+        error => console.error(error)
+      });
   }
 
   public LoadChartGraph(Title: string, labe: string[], num: number[]) {

@@ -10,8 +10,8 @@ export class WDashboardService {
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
-  GetListTemperatures(cname: string): Observable<IDayTemperature> {
-    return this.http.get<IDayTemperature>(this.apiURL);
+  GetListTemperatures(cname: string, utemp: string): Observable<IDayTemperature> {
+    return this.http.get<IDayTemperature>(this.apiURL + "?cityName=" + cname + "&unitTemp=" + utemp + "");
   }
 
 }
