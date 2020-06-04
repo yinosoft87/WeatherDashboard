@@ -33,6 +33,7 @@
     "bootstrap": "^3.3.7",
     "chart.js": "^2.7.2",
     "core-js": "^2.4.1",
+    "decimal.js": "^10.2.0",
     "ng-semantic": "^1.1.13",
     "ngx-bootstrap": "^3.0.1",
     "rxjs": "^5.5.6",
